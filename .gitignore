@@ -1,0 +1,6 @@
+node_modules/
+
+.jsbeautifyrc
+jsconfig.json
+typings/
+typings.json
