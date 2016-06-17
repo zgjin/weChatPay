@@ -4,3 +4,5 @@ typings/
 typings.json
 jsconfig.json
 .jsbeautifyrc
+
+.eslintrc
