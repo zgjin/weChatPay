@@ -6,3 +6,5 @@ jsconfig.json
 .jsbeautifyrc
 
 .eslintrc
+
+npm-debug.log
