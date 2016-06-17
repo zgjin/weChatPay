@@ -1,3 +1,5 @@
+node_modules/
+
 typings/
 typings.json
 jsconfig.json
