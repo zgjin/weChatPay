@@ -89,12 +89,6 @@ var validateBody = function validateBody(body) {return new Promise(function (res
       if (data.result_code === RETURN_CODES.FAIL) {
         error = new Error(data.err_code);
         error.name = 'BusinessError';} else 
-      if (self.appId !== data.appid) {
-        error = new Error();
-        error.name = 'InvalidAppId';} else 
-      if (self.mchId !== data.mch_id) {
-        error = new Error();
-        error.name = 'InvalidMchId';} else 
       if (self._getSign(data) !== data.sign) {
         error = new Error();
         error.name = 'InvalidSignature';}

@@ -64,7 +64,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
               };params = Object.assign({}, _this.config, default_params, order);vali = _util2.default.validate(params, requireData);if (!vali) {_context.next = 5;break;}throw new Error('缺少参数' + vali);case 5:_context.next = 7;return _this.sendRequestTWcPay(params, URLS.UNIFIED_ORDER, { required: ['body', 'out_trade_no', 'total_fee', 'spbill_create_ip', 'trade_type'] });case 7:_ref = _context.sent;error = _ref.error;data = _ref.data;if (!error) {_context.next = 12;break;}throw error;case 12: // 返回参数重新生成sign,{app_id,partnerKey,prepayid,nonce_str,timeStamp,package:prepay_id=}
               payParams = Object.assign({}, { appid: data.appid || _this.config.appid, partnerKey: _this.config.partnerKey, prepay_id: data.prepay_id, 
                 timeStamp: _util2.default._generateTimeStamp, 
-                package: 'prepay_id=' + data.prepay_id });
+                package: 'Sign=WXPay' });
 
               payParams.paySign = _util2.default._getSign(payParams);return _context.abrupt('return', 
               payParams);case 15:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return ref.apply(this, arguments);};}();this.
@@ -138,7 +138,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
   // this.mch_id = config.mchId;// 微信支付分配的商户号
   // this.notify_url = config.notifyUrl;// 支付成功后回调的url
   // partnerKey
-  this.config = config || '';} // 调用微信统一下单API，获取预订单的信息
+  this.config = config || {};} // 调用微信统一下单API，获取预订单的信息
 // TODO:收货地址共享接口,Generate parameters for `WeixinJSBridge.invoke('editAddress', parameters)`.
 // getEditAddressParams = async (params) => {
 // }
