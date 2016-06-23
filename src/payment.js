@@ -90,11 +90,8 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
       rawBody, _ref3, 
-      error, body;return _regenerator2.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!(req.method !== 'POST')) {_context3.next = 4;break;}_error = new Error();_error.name = 'NotImplemented';throw _error;case 4:_context3.next = 6;return _util2.default.getRawBody(req);case 6:rawBody = _context3.sent;_context3.next = 9;return _util2.default.validateBody(rawBody);case 9:_ref3 = _context3.sent;error = _ref3.error;body = _ref3.body;if (!
-              error) {_context3.next = 14;break;}throw (
-                error);case 14:return _context3.abrupt('return', 
-
-              body);case 15:case 'end':return _context3.stop();}}}, _callee3, _this);}));return function (_x5) {return ref.apply(this, arguments);};}();this.
+      error, body;return _regenerator2.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!(req.method !== 'POST')) {_context3.next = 4;break;}_error = new Error();_error.name = 'NotImplemented';throw _error;case 4:_context3.next = 6;return _util2.default.getRawBody(req);case 6:rawBody = _context3.sent;_context3.next = 9;return _util2.default.validateBody(rawBody);case 9:_ref3 = _context3.sent;error = _ref3.error;body = _ref3.body;return _context3.abrupt('return', 
+              { error: error, body: body });case 13:case 'end':return _context3.stop();}}}, _callee3, _this);}));return function (_x5) {return ref.apply(this, arguments);};}();this.
 
 
   getOrder = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(params) {var _ref4, 
