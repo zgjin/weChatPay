@@ -94,12 +94,20 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
               { error: error, body: body });case 13:case 'end':return _context3.stop();}}}, _callee3, _this);}));return function (_x5) {return ref.apply(this, arguments);};}();this.
 
 
-  getOrder = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(params) {var _ref4, 
-      error, data;return _regenerator2.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return _this.sendRequestTWcPay(params, URLS.ORDER_QUERY, { required: ['transaction_id|out_trade_no'] });case 2:_ref4 = _context4.sent;error = _ref4.error;data = _ref4.data;if (!
-              error) {_context4.next = 7;break;}throw (
-                error);case 7:return _context4.abrupt('return', 
 
-              data);case 8:case 'end':return _context4.stop();}}}, _callee4, _this);}));return function (_x6) {return ref.apply(this, arguments);};}();this.
+
+
+
+  getOrder = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(params) {var 
+      default_params, 
+
+
+      obj, _ref4, 
+      error, data;return _regenerator2.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:default_params = { nonce_str: _util2.default._generateNonceStr() // 随机字符串，不长于32位
+              };obj = Object.assign({}, _this.config, default_params, params);_context4.next = 4;return _this.sendRequestTWcPay(obj, URLS.ORDER_QUERY, { required: ['transaction_id|out_trade_no'] });case 4:_ref4 = _context4.sent;error = _ref4.error;data = _ref4.data;if (!error) {_context4.next = 9;break;}throw (
+                error);case 9:return _context4.abrupt('return', 
+
+              data);case 10:case 'end':return _context4.stop();}}}, _callee4, _this);}));return function (_x6) {return ref.apply(this, arguments);};}();this.
 
 
   closeOrder = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(params) {var _ref5, 
@@ -140,4 +148,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 // getEditAddressParams = async (params) => {
 // }
 // 接收微信付款确认请求
-;exports.default = Payment;module.exports = exports['default'];
+/**
+ * @params{out_tarde_no}
+ * @config{appid,mch_id}
+ */;exports.default = Payment;module.exports = exports['default'];
