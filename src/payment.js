@@ -63,7 +63,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
                 nonce_str: _util2.default._generateNonceStr() // 随机字符串，不长于32位
               };params = Object.assign({}, _this.config, default_params, order);vali = _util2.default.validate(params, requireData);if (!vali) {_context.next = 5;break;}throw new Error('缺少参数' + vali);case 5:_context.next = 7;return _this.sendRequestTWcPay(params, URLS.UNIFIED_ORDER, { required: ['body', 'out_trade_no', 'total_fee', 'spbill_create_ip', 'trade_type'] });case 7:_ref = _context.sent;error = _ref.error;data = _ref.data;if (!error) {_context.next = 12;break;}throw error;case 12: // 返回参数重新生成sign,{app_id,partnerKey,prepayid,nonce_str,timeStamp,package:prepay_id=}
               payParams = Object.assign({}, { appid: data.appid || _this.config.appid, partnerKey: _this.config.partnerKey, prepay_id: data.prepay_id, 
-                timeStamp: _util2.default._generateTimeStamp, 
+                timeStamp: _util2.default._generateTimeStamp(), 
                 package: 'Sign=WXPay' });
 
               payParams.paySign = _util2.default._getSign(payParams);return _context.abrupt('return', 
