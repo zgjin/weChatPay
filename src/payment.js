@@ -10,7 +10,7 @@ var requireData = {
   body: true, 
   detail: false, 
   attach: false, 
-  out_tarde_no: true, 
+  out_trade_no: true, 
   fee_type: false, 
   total_fee: true, 
   spbill_create_ip: true, 
@@ -170,6 +170,6 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 // }
 // 接收微信付款确认请求
 /**
- * @params{out_tarde_no}
+ * @params{out_trade_no}
  * @config{appid,mch_id}
  */;exports.default = Payment;module.exports = exports['default'];
