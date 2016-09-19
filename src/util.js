@@ -33,9 +33,10 @@ var _generateNonceStr = function _generateNonceStr(length) {
 var toString = function toString(params) {var _iteratorNormalCompletion2 = true;var _didIteratorError2 = false;var _iteratorError2 = undefined;try {
     for (var _iterator2 = Object.keys(params)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {var key = _step2.value;
       if (params[key] !== undefined && params[key] !== null) {
-        params[key] = params[key].toString();}}} catch (err) {_didIteratorError2 = true;_iteratorError2 = err;} finally {try {if (!_iteratorNormalCompletion2 && _iterator2.return) {_iterator2.return();}} finally {if (_didIteratorError2) {throw _iteratorError2;}}}};
+        params[key] = params[key].toString();}}} catch (err) {_didIteratorError2 = true;_iteratorError2 = err;} finally {try {if (!_iteratorNormalCompletion2 && _iterator2.return) {_iterator2.return();}} finally {if (_didIteratorError2) {throw _iteratorError2;}}}
 
 
+  return params;};
 
 
 var _toQueryString = function _toQueryString(object) {return (
@@ -44,6 +45,7 @@ var _toQueryString = function _toQueryString(object) {return (
     join('&'));};
 
 var _getSign = function _getSign(params, key) {
+  console.log('util._getSign.params', params);
   var pkg = Object.assign({}, params);
   console.log('util._getSign.params', pkg);
   var partner_key = pkg.partner_key || key || '';
@@ -52,9 +54,11 @@ var _getSign = function _getSign(params, key) {
 
   delete pkg.partner_key;
   delete pkg.sign;
-  var string1 = _toQueryString(pkg);
-  console.log('util._getSign.params._toQueryString', string1);
-  var stringSignTemp = string1 + '&key=' + partner_key;
+  console.log('util._getSign.params.to._toQueryString', params);
+  var string_query = _toQueryString(pkg);
+  console.log('util._getSign.params._toQueryString', string_query);
+  var stringSignTemp = string_query + '&key=' + partner_key;
+  console.log('util._getSign.params.stringSignTemp', stringSignTemp);
   return _utility2.default.md5(stringSignTemp).toUpperCase();};
 
 
@@ -89,7 +93,7 @@ var validateBody = function validateBody(body, key) {return new Promise(function
       var error = null;
       var data = json ? json.xml : {};
       console.log('util.validateBody.data', data);
-      console.log('util.validateBody.getsign', _getSign(data, key));
+      // console.log('util.validateBody.getsign', _getSign(data, key));
       if (data.return_code === RETURN_CODES.FAIL) {
         error = new Error(data.return_msg);
         error.name = 'ProtocolError';} else 
