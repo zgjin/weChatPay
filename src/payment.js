@@ -98,9 +98,10 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
 
+
       body, _ref2, 
-      error, data;return _regenerator2.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:console.log('sendRequestTWcPay.params', params);_context2.next = 3;return _util2.default.checkRequireData(params, options);case 3:params.sign = _util2.default._getSign(_util2.default.toString(params), _this.config.partner_key);delete params.partner_key;_context2.next = 7;return _util2.default._httpRequest(url, _util2.default.buildXml(params));case 7:body = _context2.sent;_context2.next = 10;return _util2.default.validateBody(body, _this.config.partner_key);case 10:_ref2 = _context2.sent;error = _ref2.error;data = _ref2.data;return _context2.abrupt('return', 
-              { error: error, data: data });case 14:case 'end':return _context2.stop();}}}, _callee2, _this);}));return function (_x2, _x3, _x4) {return ref.apply(this, arguments);};}();this.
+      error, data;return _regenerator2.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:console.log('sendRequestTWcPay.params', params);_context2.next = 3;return _util2.default.checkRequireData(params, options);case 3:params.sign = _util2.default._getSign(_util2.default.toString(params), _this.config.partner_key);console.log('sendRequestTWcPay.params.sign', params);delete params.partner_key;_context2.next = 8;return _util2.default._httpRequest(url, _util2.default.buildXml(params));case 8:body = _context2.sent;_context2.next = 11;return _util2.default.validateBody(body, _this.config.partner_key);case 11:_ref2 = _context2.sent;error = _ref2.error;data = _ref2.data;return _context2.abrupt('return', 
+              { error: error, data: data });case 15:case 'end':return _context2.stop();}}}, _callee2, _this);}));return function (_x2, _x3, _x4) {return ref.apply(this, arguments);};}();this.
 
 
 
