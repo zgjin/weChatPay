@@ -45,20 +45,15 @@ var _toQueryString = function _toQueryString(object) {return (
     join('&'));};
 
 var _getSign = function _getSign(params, key) {
-  console.log('util._getSign.params', params);
   var pkg = Object.assign({}, params);
-  console.log('util._getSign.params', pkg);
   var partner_key = pkg.partner_key || key || '';
   if (!partner_key) {
     throw new Error('invalidPartnerKey');}
 
   delete pkg.partner_key;
   delete pkg.sign;
-  console.log('util._getSign.params.to._toQueryString', params);
   var string_query = _toQueryString(pkg);
-  console.log('util._getSign.params._toQueryString', string_query);
   var stringSignTemp = string_query + '&key=' + partner_key;
-  console.log('util._getSign.params.stringSignTemp', stringSignTemp);
   return _utility2.default.md5(stringSignTemp).toUpperCase();};
 
 
@@ -92,8 +87,6 @@ var validateBody = function validateBody(body, key) {return new Promise(function
 
       var error = null;
       var data = json ? json.xml : {};
-      console.log('util.validateBody.data', data);
-      // console.log('util.validateBody.getsign', _getSign(data, key));
       if (data.return_code === RETURN_CODES.FAIL) {
         error = new Error(data.return_msg);
         error.name = 'ProtocolError';} else 

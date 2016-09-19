@@ -43,7 +43,6 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
   getReadyPayParams = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(order) {var 
-
       default_params, 
 
 
@@ -72,10 +71,10 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
 
-      payParams;return _regenerator2.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:console.log('getReadyPayParams.params', order);default_params = { out_trade_no: 'XSDX' + _util2.default._generateTimeStamp(), // 商户订单号XSDX+'时间戳'
+      payParams;return _regenerator2.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:default_params = { out_trade_no: 'XSDX' + _util2.default._generateTimeStamp(), // 商户订单号XSDX+'时间戳'
                 nonce_str: _util2.default._generateNonceStr() // 随机字符串，不长于32位
-              };params = Object.assign({}, _this.config, default_params, order);console.log('getReadyPayParams.fullparams', params);vali = _util2.default.validate(params, requireData);if (!vali) {_context.next = 7;break;}throw new Error('缺少参数' + vali);case 7: // 发送请求到微信
-              unifiRequired = ['body', 'out_trade_no', 'total_fee', 'spbill_create_ip', 'trade_type'];if (params.trade_type === 'JSAPI') {unifiRequired.push('openid');} else if (params.trade_type === 'NATIVE') {unifiRequired.push('product_id');}_context.next = 11;return _this.sendRequestTWcPay(params, URLS.UNIFIED_ORDER, { required: unifiRequired });case 11:_ref = _context.sent;error = _ref.error;data = _ref.data;console.log('getReadyPayParams.aftersendRequestTWcPay.result', data);if (!error) {_context.next = 17;break;}throw error;case 17: // 返回参数重新生成sign,{app_id,partner_key,prepayid,nonce_str,timeStamp,package:prepay_id=}
+              };params = Object.assign({}, _this.config, default_params, order);console.log('getReadyPayParams.fullparams', params);vali = _util2.default.validate(params, requireData);if (!vali) {_context.next = 6;break;}throw new Error('缺少参数' + vali);case 6: // 发送请求到微信
+              unifiRequired = ['body', 'out_trade_no', 'total_fee', 'spbill_create_ip', 'trade_type'];if (params.trade_type === 'JSAPI') {unifiRequired.push('openid');} else if (params.trade_type === 'NATIVE') {unifiRequired.push('product_id');}_context.next = 10;return _this.sendRequestTWcPay(params, URLS.UNIFIED_ORDER, { required: unifiRequired });case 10:_ref = _context.sent;error = _ref.error;data = _ref.data;console.log('getReadyPayParams.aftersendRequestTWcPay.result', data);if (!error) {_context.next = 16;break;}throw error;case 16: // 返回参数重新生成sign,{app_id,partner_key,prepayid,nonce_str,timeStamp,package:prepay_id=}
               // APP与JSAPI生成签名的package字段的值不同
               packageVal = 'Sign=WXPay';if (params.trade_type === 'JSAPI') {packageVal = 'prepay_id=' + data.prepay_id;}payParams = Object.assign({}, { appid: data.appid || _this.config.appid, partnerid: _this.config.mch_id, prepayid: data.prepay_id, timestamp: _util2.default._generateTimeStamp(), noncestr: _util2.default._generateNonceStr(), 
                 package: packageVal });
@@ -86,7 +85,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
                 params.code_url = data.code_url;}
 
               console.log('getReadyPayParams.result', payParams);return _context.abrupt('return', 
-              payParams);case 24:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return ref.apply(this, arguments);};}();this.
+              payParams);case 23:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return ref.apply(this, arguments);};}();this.
 
 
 
@@ -97,11 +96,9 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
 
-
-
       body, _ref2, 
-      error, data;return _regenerator2.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:console.log('sendRequestTWcPay.params', params);_context2.next = 3;return _util2.default.checkRequireData(params, options);case 3:params.sign = _util2.default._getSign(_util2.default.toString(params), _this.config.partner_key);console.log('sendRequestTWcPay.params.sign', params);delete params.partner_key;_context2.next = 8;return _util2.default._httpRequest(url, _util2.default.buildXml(params));case 8:body = _context2.sent;_context2.next = 11;return _util2.default.validateBody(body, _this.config.partner_key);case 11:_ref2 = _context2.sent;error = _ref2.error;data = _ref2.data;return _context2.abrupt('return', 
-              { error: error, data: data });case 15:case 'end':return _context2.stop();}}}, _callee2, _this);}));return function (_x2, _x3, _x4) {return ref.apply(this, arguments);};}();this.
+      error, data;return _regenerator2.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return _util2.default.checkRequireData(params, options);case 2:params.sign = _util2.default._getSign(_util2.default.toString(params), _this.config.partner_key);delete params.partner_key;_context2.next = 6;return _util2.default._httpRequest(url, _util2.default.buildXml(params));case 6:body = _context2.sent;_context2.next = 9;return _util2.default.validateBody(body, _this.config.partner_key);case 9:_ref2 = _context2.sent;error = _ref2.error;data = _ref2.data;return _context2.abrupt('return', 
+              { error: error, data: data });case 13:case 'end':return _context2.stop();}}}, _callee2, _this);}));return function (_x2, _x3, _x4) {return ref.apply(this, arguments);};}();this.
 
 
 
