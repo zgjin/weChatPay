@@ -2,7 +2,7 @@
 
 var requireData = { 
   appid: true, 
-  partnerKey: true, 
+  partner_key: true, 
   mch_id: true, 
   device_info: false, 
   nonce_str: true, 
@@ -43,31 +43,50 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
   getReadyPayParams = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(order) {var 
+
       default_params, 
 
 
 
       params, 
-      vali, _ref, 
+
+      vali, 
 
 
 
-      // 发送请求到微信
+
+      unifiRequired, _ref, 
+
+
+
+
+
       error, data, 
 
 
 
 
 
-      payParams;return _regenerator2.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:default_params = { out_tarde_no: 'XSDX' + _util2.default._generateTimeStamp(), // 商户订单号XSDX+'时间戳'
-                nonce_str: _util2.default._generateNonceStr() // 随机字符串，不长于32位
-              };params = Object.assign({}, _this.config, default_params, order);vali = _util2.default.validate(params, requireData);if (!vali) {_context.next = 5;break;}throw new Error('缺少参数' + vali);case 5:_context.next = 7;return _this.sendRequestTWcPay(params, URLS.UNIFIED_ORDER, { required: ['body', 'out_trade_no', 'total_fee', 'spbill_create_ip', 'trade_type'] });case 7:_ref = _context.sent;error = _ref.error;data = _ref.data;if (!error) {_context.next = 12;break;}throw error;case 12: // 返回参数重新生成sign,{app_id,partnerKey,prepayid,nonce_str,timeStamp,package:prepay_id=}
-              payParams = Object.assign({}, { appid: data.appid || _this.config.appid, partnerKey: _this.config.partnerKey, prepay_id: data.prepay_id, 
-                timeStamp: _util2.default._generateTimeStamp(), 
-                package: 'Sign=WXPay' });
 
-              payParams.paySign = _util2.default._getSign(payParams);return _context.abrupt('return', 
-              payParams);case 15:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return ref.apply(this, arguments);};}();this.
+      packageVal, 
+
+
+
+      payParams;return _regenerator2.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:console.log('getReadyPayParams.params', order);default_params = { out_tarde_no: 'XSDX' + _util2.default._generateTimeStamp(), // 商户订单号XSDX+'时间戳'
+                nonce_str: _util2.default._generateNonceStr() // 随机字符串，不长于32位
+              };params = Object.assign({}, _this.config, default_params, order);console.log('getReadyPayParams.fullparams', params);vali = _util2.default.validate(params, requireData);if (!vali) {_context.next = 7;break;}throw new Error('缺少参数' + vali);case 7: // 发送请求到微信
+              unifiRequired = ['body', 'out_trade_no', 'total_fee', 'spbill_create_ip', 'trade_type'];if (params.trade_type === 'JSAPI') {unifiRequired.push('openid');} else if (params.trade_type === 'NATIVE') {unifiRequired.push('product_id');}_context.next = 11;return _this.sendRequestTWcPay(params, URLS.UNIFIED_ORDER, { required: unifiRequired });case 11:_ref = _context.sent;error = _ref.error;data = _ref.data;console.log('getReadyPayParams.aftersendRequestTWcPay.result', data);if (!error) {_context.next = 17;break;}throw error;case 17: // 返回参数重新生成sign,{app_id,partner_key,prepayid,nonce_str,timeStamp,package:prepay_id=}
+              // APP与JSAPI生成签名的package字段的值不同
+              packageVal = 'Sign=WXPay';if (params.trade_type === 'JSAPI') {packageVal = 'prepay_id=' + data.prepay_id;}payParams = Object.assign({}, { appid: data.appid || _this.config.appid, partner_key: _this.config.partner_key, prepay_id: data.prepay_id, timeStamp: _util2.default._generateTimeStamp(), nonce_str: _util2.default._generateNonceStr(), 
+                package: packageVal });
+
+              payParams.paySign = _util2.default._getSign(payParams, _this.config.partner_key);
+
+              if (order.trade_type === 'NATIVE') {
+                params.code_url = data.code_url;}
+
+              console.log('getReadyPayParams.result', payParams);return _context.abrupt('return', 
+              payParams);case 24:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return ref.apply(this, arguments);};}();this.
 
 
 
@@ -77,9 +96,11 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
   sendRequestTWcPay = function () {var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(params, url, options) {var 
 
 
+
+
       body, _ref2, 
-      error, data;return _regenerator2.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return _util2.default.checkRequireData(params, options);case 2:params.sign = _util2.default._getSign(_util2.default.toString(params));_context2.next = 5;return _util2.default._httpRequest(url, _util2.default.buildXml(params));case 5:body = _context2.sent;_context2.next = 8;return _util2.default.validateBody(body);case 8:_ref2 = _context2.sent;error = _ref2.error;data = _ref2.data;return _context2.abrupt('return', 
-              { error: error, data: data });case 12:case 'end':return _context2.stop();}}}, _callee2, _this);}));return function (_x2, _x3, _x4) {return ref.apply(this, arguments);};}();this.
+      error, data;return _regenerator2.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:console.log('sendRequestTWcPay.params', params);_context2.next = 3;return _util2.default.checkRequireData(params, options);case 3:params.sign = _util2.default._getSign(_util2.default.toString(params), _this.config.partner_key);delete params.partner_key;_context2.next = 7;return _util2.default._httpRequest(url, _util2.default.buildXml(params));case 7:body = _context2.sent;_context2.next = 10;return _util2.default.validateBody(body, _this.config.partner_key);case 10:_ref2 = _context2.sent;error = _ref2.error;data = _ref2.data;return _context2.abrupt('return', 
+              { error: error, data: data });case 14:case 'end':return _context2.stop();}}}, _callee2, _this);}));return function (_x2, _x3, _x4) {return ref.apply(this, arguments);};}();this.
 
 
 
@@ -90,7 +111,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
       rawBody, _ref3, 
-      error, body;return _regenerator2.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!(req.method !== 'POST')) {_context3.next = 4;break;}_error = new Error();_error.name = 'NotImplemented';throw _error;case 4:_context3.next = 6;return _util2.default.getRawBody(req);case 6:rawBody = _context3.sent;_context3.next = 9;return _util2.default.validateBody(rawBody);case 9:_ref3 = _context3.sent;error = _ref3.error;body = _ref3.body;return _context3.abrupt('return', 
+      error, body;return _regenerator2.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!(req.method !== 'POST')) {_context3.next = 4;break;}_error = new Error();_error.name = 'NotImplemented';throw _error;case 4:_context3.next = 6;return _util2.default.getRawBody(req);case 6:rawBody = _context3.sent;_context3.next = 9;return _util2.default.validateBody(rawBody, _this.config.partner_key);case 9:_ref3 = _context3.sent;error = _ref3.error;body = _ref3.body;return _context3.abrupt('return', 
               { error: error, body: body });case 13:case 'end':return _context3.stop();}}}, _callee3, _this);}));return function (_x5) {return ref.apply(this, arguments);};}();this.
 
 
@@ -142,7 +163,7 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
               data);case 8:case 'end':return _context8.stop();}}}, _callee8, _this);}));return function (_x10) {return ref.apply(this, arguments);};}(); // this.app_id = config.appId;// APPID
   // this.mch_id = config.mchId;// 微信支付分配的商户号
   // this.notify_url = config.notifyUrl;// 支付成功后回调的url
-  // partnerKey
+  // partner_key
   this.config = config || {};} // 调用微信统一下单API，获取预订单的信息
 // TODO:收货地址共享接口,Generate parameters for `WeixinJSBridge.invoke('editAddress', parameters)`.
 // getEditAddressParams = async (params) => {
