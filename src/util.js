@@ -101,7 +101,7 @@ var validateBody = function validateBody(body, key) {return new Promise(function
         error = new Error();
         error.name = 'InvalidSignature';
       }
-
+      console.log('validateBody.error----->', error);
       reslove({ error: error, data: data });
     });
   });};
