@@ -33,9 +33,10 @@ var _generateNonceStr = function _generateNonceStr(length) {
 var toString = function toString(params) {var _iteratorNormalCompletion2 = true;var _didIteratorError2 = false;var _iteratorError2 = undefined;try {
     for (var _iterator2 = Object.keys(params)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {var key = _step2.value;
       if (params[key] !== undefined && params[key] !== null) {
-        params[key] = params[key].toString();}}} catch (err) {_didIteratorError2 = true;_iteratorError2 = err;} finally {try {if (!_iteratorNormalCompletion2 && _iterator2.return) {_iterator2.return();}} finally {if (_didIteratorError2) {throw _iteratorError2;}}}};
+        params[key] = params[key].toString();}}} catch (err) {_didIteratorError2 = true;_iteratorError2 = err;} finally {try {if (!_iteratorNormalCompletion2 && _iterator2.return) {_iterator2.return();}} finally {if (_didIteratorError2) {throw _iteratorError2;}}}
 
 
+  return params;};
 
 
 var _toQueryString = function _toQueryString(object) {return (
@@ -43,12 +44,16 @@ var _toQueryString = function _toQueryString(object) {return (
     map(function (key) {return key + '=' + object[key];}).
     join('&'));};
 
-var _getSign = function _getSign(params) {
+var _getSign = function _getSign(params, key) {
   var pkg = Object.assign({}, params);
-  var partnerKey = pkg.partnerKey;
-  delete pkg.partnerKey;
-  var string1 = _toQueryString(pkg);
-  var stringSignTemp = string1 + '&key=' + partnerKey;
+  var partner_key = pkg.partner_key || key || '';
+  if (!partner_key) {
+    throw new Error('invalidPartnerKey');}
+
+  delete pkg.partner_key;
+  delete pkg.sign;
+  var string_query = _toQueryString(pkg);
+  var stringSignTemp = string_query + '&key=' + partner_key;
   return _utility2.default.md5(stringSignTemp).toUpperCase();};
 
 
@@ -70,7 +75,7 @@ var _httpRequest = function _httpRequest(url, data) {return new Promise(function
 
 
 
-var validateBody = function validateBody(body) {return new Promise(function (reslove, reject) {
+var validateBody = function validateBody(body, key) {return new Promise(function (reslove, reject) {
     _xml2js2.default.parseString(body, { 
       trim: true, 
       explicitArray: false }, 
@@ -82,14 +87,13 @@ var validateBody = function validateBody(body) {return new Promise(function (res
 
       var error = null;
       var data = json ? json.xml : {};
-
       if (data.return_code === RETURN_CODES.FAIL) {
         error = new Error(data.return_msg);
         error.name = 'ProtocolError';} else 
       if (data.result_code === RETURN_CODES.FAIL) {
         error = new Error(data.err_code);
         error.name = 'BusinessError';} else 
-      if (self._getSign(data) !== data.sign) {
+      if (_getSign(data, key) !== data.sign) {
         error = new Error();
         error.name = 'InvalidSignature';}
 
