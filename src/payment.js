@@ -102,15 +102,15 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
 
 
 
-  getWcPayConfirmRequest = function () {var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(req) {var _error, rawBody, _ref6, error, body;return _regenerator2.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!(
+  getWcPayConfirmRequest = function () {var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(req) {var _error, rawBody, _ref6, error, data;return _regenerator2.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!(
               req.method !== 'POST')) {_context3.next = 4;break;}
               _error = new Error();
               _error.name = 'NotImplemented';throw (
                 _error);case 4:_context3.next = 6;return (
 
                 _util2.default.getRawBody(req));case 6:rawBody = _context3.sent;_context3.next = 9;return (
-                _util2.default.validateBody(rawBody, _this.config.partner_key));case 9:_ref6 = _context3.sent;error = _ref6.error;body = _ref6.body;return _context3.abrupt('return',
-              { error: error, body: body });case 13:case 'end':return _context3.stop();}}}, _callee3, _this);}));return function (_x5) {return _ref5.apply(this, arguments);};}();this.
+                _util2.default.validateBody(rawBody, _this.config.partner_key));case 9:_ref6 = _context3.sent;error = _ref6.error;data = _ref6.data;return _context3.abrupt('return',
+              { error: error, data: data });case 13:case 'end':return _context3.stop();}}}, _callee3, _this);}));return function (_x5) {return _ref5.apply(this, arguments);};}();this.
 
 
 
