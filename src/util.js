@@ -45,11 +45,13 @@ var _toQueryString = function _toQueryString(object) {return (
     join('&'));};
 
 var _getSign = function _getSign(params, key) {
+  console.log('getsign.params', params);
+  console.log('getsign.key', key);
   var pkg = Object.assign({}, params);
   var partner_key = pkg.partner_key || key || '';
   console.log('partner_key---------------->', partner_key);
   if (!partner_key) {
-    throw new Error('invalidPartnerKey');
+    return '';
   }
   delete pkg.partner_key;
   delete pkg.sign;
